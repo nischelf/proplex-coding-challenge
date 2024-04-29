@@ -6,15 +6,9 @@ interface Todo {
 }
 
 function App() {
-  localStorage.setItem(
-    "todos",
-    JSON.stringify([
-      { title: "Learn React", details: null },
-      { title: "Learn TypeScript", details: "Interfaces, Types" },
-    ]),
-  );
-
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [title, setTitle] = useState("");
+  const [details, setDetails] = useState("");
 
   useEffect(() => {
     const localTodos = localStorage.getItem("todos");
@@ -22,6 +16,24 @@ function App() {
       setTodos(JSON.parse(localTodos));
     }
   }, []);
+
+  function addTodoHandler() {
+    setTodos([...todos, { title, details }]);
+    localStorage.setItem(
+      "todos",
+      JSON.stringify([...todos, { title, details }]),
+    );
+    setTitle("");
+    setDetails("");
+  }
+
+  function titleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setTitle(event.target.value);
+  }
+
+  function detailsChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setDetails(event.target.value);
+  }
 
   return (
     <main className=" min-h-screen flex flex-col items-center justify-center">
@@ -38,6 +50,19 @@ function App() {
       ) : (
         <p>No todos</p>
       )}
+      <input
+        type="text"
+        placeholder="Title"
+        value={title}
+        onChange={titleChange}
+      />
+      <input
+        type="text"
+        placeholder="Details"
+        value={details}
+        onChange={detailsChange}
+      />
+      <button onClick={addTodoHandler}>Add Todo</button>
     </main>
   );
 }
