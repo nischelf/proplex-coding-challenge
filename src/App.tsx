@@ -6,7 +6,7 @@ interface Todo {
   done: boolean;
 }
 
-function App() {
+export default function App() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState<string | null>("");
@@ -167,5 +167,3 @@ function App() {
     </main>
   );
 }
-
-export default App;
