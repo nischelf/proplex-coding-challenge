@@ -3,12 +3,14 @@ import { useState, useEffect } from "react";
 interface Todo {
   title: string;
   details: string | null;
+  done: boolean;
 }
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState<string | null>("");
+  const [done, setDone] = useState<boolean>(false);
   const [editMode, setEditMode] = useState(false);
   const [editIndex, setEditIndex] = useState<number | null>(null);
 
@@ -20,10 +22,10 @@ function App() {
   }, []);
 
   function addTodoHandler() {
-    setTodos([...todos, { title, details }]);
+    setTodos([...todos, { title, details, done }]);
     localStorage.setItem(
       "todos",
-      JSON.stringify([...todos, { title, details }]),
+      JSON.stringify([...todos, { title, details, done }]),
     );
     setTitle("");
     setDetails("");
@@ -75,15 +77,40 @@ function App() {
     setDetails(event.target.value);
   }
 
+  function doneChange(
+    event: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) {
+    setDone(event.target.checked);
+
+    const newTodos = todos.map((todo, i) => {
+      if (i === index) {
+        return { ...todo, done: event.target.checked };
+      }
+      return todo;
+    });
+    setTodos(newTodos as Todo[]);
+    localStorage.setItem("todos", JSON.stringify(newTodos));
+    setDone(false);
+  }
+
   return (
     <main className=" min-h-screen flex flex-col items-center justify-center">
       <h1 className="text-4xl">Todos</h1>
       {todos.length > 0 ? (
         <ul>
           {todos.map((todo, index) => (
-            <li key={index}>
+            <li key={index} className="flex flex-col gap-2">
               <h2 className="text-2xl">{todo.title}</h2>
               <p>{todo.details}</p>
+              <div>
+                <p className="inline">Done </p>
+                <input
+                  type="checkbox"
+                  onChange={() => doneChange(event, index)}
+                  checked={todo.done}
+                />
+              </div>
               <button
                 className="rounded bg-red-500 text-white p-0.5"
                 onClick={() => deleteTodoHandler(index)}
