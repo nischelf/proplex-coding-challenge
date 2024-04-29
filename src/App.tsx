@@ -8,7 +8,9 @@ interface Todo {
 function App() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [title, setTitle] = useState("");
-  const [details, setDetails] = useState("");
+  const [details, setDetails] = useState<string | null>("");
+  const [editMode, setEditMode] = useState(false);
+  const [editIndex, setEditIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const localTodos = localStorage.getItem("todos");
@@ -23,6 +25,44 @@ function App() {
       "todos",
       JSON.stringify([...todos, { title, details }]),
     );
+    setTitle("");
+    setDetails("");
+  }
+
+  function deleteTodoHandler(index: number) {
+    const newTodos = todos.filter((_, i) => i !== index);
+    setTodos(newTodos);
+    localStorage.setItem("todos", JSON.stringify(newTodos));
+  }
+
+  function editTodoHandler(index?: number) {
+    setEditMode(!editMode);
+    if (!editMode) {
+      if (index === undefined) {
+        return;
+      } else {
+        const i = index as number;
+        setTitle(todos[i].title);
+        setDetails(todos[i].details);
+        setEditIndex(i);
+      }
+    } else {
+      setTitle("");
+      setDetails("");
+    }
+  }
+
+  function saveEditHandler() {
+    const newTodos = todos.map((todo, i) => {
+      if (i === editIndex) {
+        return { title: title, details: details };
+      }
+      return todo;
+    });
+    setTodos(newTodos as Todo[]);
+    localStorage.setItem("todos", JSON.stringify(newTodos));
+    setEditMode(false);
+    setEditIndex(null);
     setTitle("");
     setDetails("");
   }
@@ -44,6 +84,18 @@ function App() {
             <li key={index}>
               <h2 className="text-2xl">{todo.title}</h2>
               <p>{todo.details}</p>
+              <button
+                className="rounded bg-red-500 text-white p-0.5"
+                onClick={() => deleteTodoHandler(index)}
+              >
+                Delete
+              </button>
+              <button
+                className="rounded bg-orange-500 text-white p-0.5"
+                onClick={() => editTodoHandler(index)}
+              >
+                Edit
+              </button>
             </li>
           ))}
         </ul>
@@ -62,7 +114,29 @@ function App() {
         value={details}
         onChange={detailsChange}
       />
-      <button onClick={addTodoHandler}>Add Todo</button>
+      {editMode ? (
+        <div className="flex gap-2">
+          <button
+            onClick={saveEditHandler}
+            className="bg-green-500 rounded text-white p-0.5"
+          >
+            Save
+          </button>
+          <button
+            onClick={editTodoHandler}
+            className="bg-red-500 rounded text-white p-0.5"
+          >
+            Cancel
+          </button>
+        </div>
+      ) : (
+        <button
+          onClick={addTodoHandler}
+          className="bg-green-500 rounded text-white p-0.5"
+        >
+          Add Todo
+        </button>
+      )}
     </main>
   );
 }
