@@ -11,6 +11,7 @@ export default function App() {
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState<string | null>("");
   const [done, setDone] = useState<boolean>(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [editMode, setEditMode] = useState(false);
   const [editIndex, setEditIndex] = useState<number | null>(null);
 
@@ -22,6 +23,10 @@ export default function App() {
   }, []);
 
   function addTodoHandler() {
+    if (!title) {
+      setErrorMsg("Title is required");
+      return;
+    }
     setTodos([...todos, { title, details, done }]);
     localStorage.setItem(
       "todos",
@@ -29,6 +34,7 @@ export default function App() {
     );
     setTitle("");
     setDetails("");
+    setErrorMsg(null);
   }
 
   function deleteTodoHandler(index: number) {
@@ -55,6 +61,10 @@ export default function App() {
   }
 
   function saveEditHandler() {
+    if (!title) {
+      setErrorMsg("Title is required");
+      return;
+    }
     const newTodos = todos.map((todo, i) => {
       if (i === editIndex) {
         return { title: title, details: details };
@@ -67,6 +77,7 @@ export default function App() {
     setEditIndex(null);
     setTitle("");
     setDetails("");
+    setErrorMsg(null);
   }
 
   function titleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -107,7 +118,7 @@ export default function App() {
                 <p className="inline">Done </p>
                 <input
                   type="checkbox"
-                  onChange={() => doneChange(event, index)}
+                  onChange={(event) => doneChange(event, index)}
                   checked={todo.done}
                 />
               </div>
@@ -164,6 +175,7 @@ export default function App() {
           Add Todo
         </button>
       )}
+      <p className="text-red-500">{errorMsg}</p>
     </main>
   );
 }
