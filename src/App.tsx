@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import TodoInput from "./components/TodoInput";
+import { Trash, Pencil, PlusSquare } from "@phosphor-icons/react";
+import TodoList from "./components/TodoList";
 
 interface Todo {
   title: string;
@@ -12,6 +15,7 @@ export default function App() {
   const [details, setDetails] = useState<string | null>("");
   const [done, setDone] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [addMode, setAddMode] = useState<boolean>(false);
   const [editMode, setEditMode] = useState(false);
   const [editIndex, setEditIndex] = useState<number | null>(null);
 
@@ -35,6 +39,7 @@ export default function App() {
     setTitle("");
     setDetails("");
     setErrorMsg(null);
+    setAddMode(false);
   }
 
   function deleteTodoHandler(index: number) {
@@ -80,6 +85,15 @@ export default function App() {
     setErrorMsg(null);
   }
 
+  function cancelHandler() {
+    setAddMode(false);
+    setEditMode(false);
+    setEditIndex(null);
+    setTitle("");
+    setDetails("");
+    setErrorMsg(null);
+  }
+
   function titleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setTitle(event.target.value);
   }
@@ -100,82 +114,93 @@ export default function App() {
       }
       return todo;
     });
+
+    // newTodos.sort((a, b) => (a.done === b.done ? 0 : a.done ? 1 : -1));
+
     setTodos(newTodos as Todo[]);
     localStorage.setItem("todos", JSON.stringify(newTodos));
     setDone(false);
   }
 
   return (
-    <main className=" min-h-screen flex flex-col items-center justify-center">
-      <h1 className="text-4xl">Todos</h1>
-      {todos.length > 0 ? (
-        <ul>
-          {todos.map((todo, index) => (
-            <li key={index} className="flex flex-col gap-2">
-              <h2 className="text-2xl">{todo.title}</h2>
-              <p>{todo.details}</p>
-              <div>
-                <p className="inline">Done </p>
-                <input
-                  type="checkbox"
-                  onChange={(event) => doneChange(event, index)}
-                  checked={todo.done}
-                />
-              </div>
-              <button
-                className="rounded bg-red-500 text-white p-0.5"
-                onClick={() => deleteTodoHandler(index)}
-              >
-                Delete
-              </button>
-              <button
-                className="rounded bg-orange-500 text-white p-0.5"
-                onClick={() => editTodoHandler(index)}
-              >
-                Edit
-              </button>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No todos</p>
-      )}
-      <input
-        type="text"
-        placeholder="Title"
-        value={title}
-        onChange={titleChange}
-      />
-      <input
-        type="text"
-        placeholder="Details"
-        value={details}
-        onChange={detailsChange}
-      />
-      {editMode ? (
-        <div className="flex gap-2">
-          <button
-            onClick={saveEditHandler}
-            className="bg-green-500 rounded text-white p-0.5"
-          >
-            Save
-          </button>
-          <button
-            onClick={editTodoHandler}
-            className="bg-red-500 rounded text-white p-0.5"
-          >
-            Cancel
-          </button>
-        </div>
-      ) : (
+    <main className="flex flex-col min-h-screen  items-center w-full">
+      <header className="flex justify-between  w-full mt-12 border-b-2 border-blue-500 md:w-3/4 p-2 mb-4">
+        <h1 className="text-4xl font-bold">Todo's</h1>
         <button
-          onClick={addTodoHandler}
-          className="bg-green-500 rounded text-white p-0.5"
+          onClick={() => setAddMode(!addMode)}
+          className="bg-green-500 rounded text-white p-0.5 flex gap-2 items-center"
         >
-          Add Todo
+          <p className="font-bold">Neu</p>
+          <PlusSquare size={24} weight="bold" alt={"Todo hinzufügen"} />
         </button>
+      </header>
+      {(addMode || editMode) && (
+        <div>
+          {addMode ? (
+            <div
+              className="fixed w-full h-full top-0 left-0  backdrop-blur-[2px] bg-gray-700 bg-opacity-40"
+              onClick={cancelHandler}
+            ></div>
+          ) : (
+            <div
+              className="fixed w-full h-full top-0 left-0  backdrop-blur-[2px] bg-gray-700 bg-opacity-40"
+              onClick={cancelHandler}
+            ></div>
+          )}
+          <TodoInput
+            title={title}
+            details={details}
+            titleChange={titleChange}
+            detailsChange={detailsChange}
+            addTodoHandler={addTodoHandler}
+            saveEditHandler={saveEditHandler}
+            errorMsg={errorMsg}
+            addMode={addMode}
+            cancelHandler={cancelHandler}
+          />
+        </div>
       )}
-      <p className="text-red-500">{errorMsg}</p>
+      <TodoList
+        todos={todos}
+        deleteTodoHandler={deleteTodoHandler}
+        editTodoHandler={editTodoHandler}
+        doneChange={doneChange}
+      />
+      {/* <input */}
+      {/*   type="text" */}
+      {/*   placeholder="Title" */}
+      {/*   value={title} */}
+      {/*   onChange={titleChange} */}
+      {/* /> */}
+      {/* <input */}
+      {/*   type="text" */}
+      {/*   placeholder="Details" */}
+      {/*   value={details} */}
+      {/*   onChange={detailsChange} */}
+      {/* /> */}
+      {/* {editMode ? ( */}
+      {/*   <div className="flex gap-2"> */}
+      {/*     <button */}
+      {/*       onClick={saveEditHandler} */}
+      {/*       className="bg-green-500 rounded text-white p-0.5" */}
+      {/*     > */}
+      {/*       Save */}
+      {/*     </button> */}
+      {/*     <button */}
+      {/*       onClick={editTodoHandler} */}
+      {/*       className="bg-red-500 rounded text-white p-0.5" */}
+      {/*     > */}
+      {/*       Cancel */}
+      {/*     </button> */}
+      {/*   </div> */}
+      {/* ) : ( */}
+      {/*   <button */}
+      {/*     onClick={addTodoHandler} */}
+      {/*     className="bg-green-500 rounded text-white p-0.5" */}
+      {/*   > */}
+      {/*     Add Todo */}
+      {/*   </button> */}
+      {/* )} */}
     </main>
   );
 }
