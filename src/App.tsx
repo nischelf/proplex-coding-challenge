@@ -126,7 +126,7 @@ export default function App() {
         <h1 className="text-4xl font-bold">Todo's</h1>
         <button
           onClick={() => setAddMode(!addMode)}
-          className="bg-green-500 rounded text-white py-0.5 px-2 flex gap-2 items-center"
+          className="bg-green-500 rounded text-white py-0.5 px-2 flex gap-2 items-center hover:bg-green-700 active:bg-green-700 transition-colors duration-300 ease-in-out"
         >
           <p className="font-bold">Neu</p>
           <PlusSquare size={24} weight="bold" alt={"Todo hinzufügen"} />
