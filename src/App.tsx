@@ -72,7 +72,7 @@ export default function App() {
     }
     const newTodos = todos.map((todo, i) => {
       if (i === editIndex) {
-        return { title: title, details: details };
+        return { title: title, details: details, done: done };
       }
       return todo;
     });
