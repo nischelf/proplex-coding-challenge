@@ -44,13 +44,13 @@ export default function TodoList({
                   </div>
                   <div className="flex gap-4">
                     <button
-                      className="rounded bg-red-500 text-white p-1 flex w-fit"
+                      className="rounded bg-red-500 text-white p-1 flex w-fit hover:bg-red-700 active:bg-red-700 transition-colors duration-300 ease-in-out"
                       onClick={() => deleteTodoHandler(index)}
                     >
                       <Trash size={24} />
                     </button>
                     <button
-                      className="rounded bg-blue-500 text-white p-1 flex w-fit"
+                      className="rounded bg-blue-500 text-white p-1 flex w-fit hover:bg-blue-700 active:bg-blue-700 transition-colors duration-300 ease-in-out"
                       onClick={() => editTodoHandler(index)}
                     >
                       <Pencil size={24} />
