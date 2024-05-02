@@ -27,33 +27,33 @@ export default function TodoInput({
           placeholder="Title"
           value={title}
           onChange={titleChange}
-          className="rounded border-2 border-gray-400 w-full p-1"
+          className="rounded border-2 border-gray-400 w-full p-1 md:text-xl lg:text-base"
         />
         <input
           type="text"
           placeholder="Details"
           value={details || ""}
           onChange={detailsChange}
-          className="rounded border-2 border-gray-400 w-full p-1"
+          className="rounded border-2 border-gray-400 w-full p-1 md:text-xl lg:text-base"
         />
         {addMode ? (
           <button
             onClick={addTodoHandler}
-            className="bg-green-500 rounded text-white p-0.5 w-full"
+            className="bg-green-500 rounded text-white p-0.5 w-full md:text-xl lg:text-base"
           >
             Hinzufügen
           </button>
         ) : (
           <button
             onClick={saveEditHandler}
-            className="bg-green-500 rounded text-white p-0.5 w-full"
+            className="bg-green-500 rounded text-white p-0.5 w-full md:text-xl lg:text-base"
           >
             Speichern
           </button>
         )}
         <button
           onClick={cancelHandler}
-          className="bg-red-500 rounded text-white p-0.5 w-full"
+          className="bg-red-500 rounded text-white p-0.5 w-full md:text-xl lg:text-base"
         >
           Abbrechen
         </button>
