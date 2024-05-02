@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import TodoInput from "./components/TodoInput";
-import { Trash, Pencil, PlusSquare } from "@phosphor-icons/react";
+import { PlusSquare } from "@phosphor-icons/react";
 import TodoList from "./components/TodoList";
 
 interface Todo {
@@ -115,8 +115,6 @@ export default function App() {
       return todo;
     });
 
-    // newTodos.sort((a, b) => (a.done === b.done ? 0 : a.done ? 1 : -1));
-
     setTodos(newTodos as Todo[]);
     localStorage.setItem("todos", JSON.stringify(newTodos));
     setDone(false);
@@ -166,41 +164,6 @@ export default function App() {
         editTodoHandler={editTodoHandler}
         doneChange={doneChange}
       />
-      {/* <input */}
-      {/*   type="text" */}
-      {/*   placeholder="Title" */}
-      {/*   value={title} */}
-      {/*   onChange={titleChange} */}
-      {/* /> */}
-      {/* <input */}
-      {/*   type="text" */}
-      {/*   placeholder="Details" */}
-      {/*   value={details} */}
-      {/*   onChange={detailsChange} */}
-      {/* /> */}
-      {/* {editMode ? ( */}
-      {/*   <div className="flex gap-2"> */}
-      {/*     <button */}
-      {/*       onClick={saveEditHandler} */}
-      {/*       className="bg-green-500 rounded text-white p-0.5" */}
-      {/*     > */}
-      {/*       Save */}
-      {/*     </button> */}
-      {/*     <button */}
-      {/*       onClick={editTodoHandler} */}
-      {/*       className="bg-red-500 rounded text-white p-0.5" */}
-      {/*     > */}
-      {/*       Cancel */}
-      {/*     </button> */}
-      {/*   </div> */}
-      {/* ) : ( */}
-      {/*   <button */}
-      {/*     onClick={addTodoHandler} */}
-      {/*     className="bg-green-500 rounded text-white p-0.5" */}
-      {/*   > */}
-      {/*     Add Todo */}
-      {/*   </button> */}
-      {/* )} */}
     </main>
   );
 }

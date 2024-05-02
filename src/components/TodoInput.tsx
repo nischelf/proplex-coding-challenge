@@ -20,7 +20,6 @@ export default function TodoInput({
   cancelHandler: () => void;
 }) {
   return (
-    // <div className="fixed left-0 top-0 flex w-full min-h-screen justify-center items-center">
     <div className="fixed left-0 top-1/3 flex flex-col w-full justify-center items-center">
       <div className="w-3/4 bg-white flex flex-col gap-2 rounded-lg p-2 items-center">
         <input
