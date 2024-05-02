@@ -63,6 +63,9 @@ export default function TodoList({
             ),
         )}
       </ul>
+      <h2 className="text-3xl font-bold my-2 w-full md:w-3/4 border-b-2 border-blue-500 p-2 mb-4">
+        Erledigt
+      </h2>
       <ul className="w-3/4 flex flex-col gap-2 justify-center">
         {todos.map(
           (todo, index) =>
