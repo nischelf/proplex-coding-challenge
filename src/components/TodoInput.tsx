@@ -39,21 +39,21 @@ export default function TodoInput({
         {addMode ? (
           <button
             onClick={addTodoHandler}
-            className="bg-green-500 rounded text-white p-0.5 w-full md:text-xl lg:text-base"
+            className="bg-green-500 rounded text-white p-0.5 w-full md:text-xl lg:text-base hover:bg-green-700 active:bg-green-700 transition-colors duration-300 ease-in-out"
           >
             Hinzufügen
           </button>
         ) : (
           <button
             onClick={saveEditHandler}
-            className="bg-green-500 rounded text-white p-0.5 w-full md:text-xl lg:text-base"
+            className="bg-green-500 rounded text-white p-0.5 w-full md:text-xl lg:text-base hover:bg-green-700 active:bg-green-700 transition-colors duration-300 ease-in-out"
           >
             Speichern
           </button>
         )}
         <button
           onClick={cancelHandler}
-          className="bg-red-500 rounded text-white p-0.5 w-full md:text-xl lg:text-base"
+          className="bg-red-500 rounded text-white p-0.5 w-full md:text-xl lg:text-base hover:bg-red-700 active:bg-red-700 transition-colors duration-300 ease-in-out"
         >
           Abbrechen
         </button>
