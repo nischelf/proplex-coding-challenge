@@ -21,18 +21,26 @@ export default function TodoInput({
 }) {
   return (
     <div className="fixed left-0 top-1/3 flex flex-col w-full justify-center items-center">
-      <div className="w-3/4 bg-white flex flex-col gap-2 rounded-lg p-2 items-center">
+      <div className="w-3/4 bg-white flex flex-col gap-2 rounded-lg p-2">
+        <label htmlFor="title" className="md:text-xl lg:text-normal">
+          Titel:
+        </label>
         <input
           type="text"
-          placeholder="Titel"
+          placeholder="Einkaufen"
           value={title}
+          id="title"
           onChange={titleChange}
           className="rounded border-2 border-gray-400 w-full p-1 md:text-xl lg:text-base"
         />
+        <label htmlFor="details" className="md:text-xl lg:text-normal">
+          Details:
+        </label>
         <input
           type="text"
-          placeholder="Details"
+          placeholder="Brot, Milch, Eier"
           value={details || ""}
+          id="details"
           onChange={detailsChange}
           className="rounded border-2 border-gray-400 w-full p-1 md:text-xl lg:text-base"
         />
