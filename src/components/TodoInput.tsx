@@ -55,9 +55,9 @@ export default function TodoInput({
           onClick={cancelHandler}
           className="bg-red-500 rounded text-white p-0.5 w-full"
         >
-          Cancel
+          Abbrechen
         </button>
-        <p className="text-red-500">{errorMsg}</p>
+        <p className="text-red-500 font-bold">{errorMsg}</p>
       </div>
     </div>
   );

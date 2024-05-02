@@ -28,7 +28,7 @@ export default function App() {
 
   function addTodoHandler() {
     if (!title) {
-      setErrorMsg("Title is required");
+      setErrorMsg("Titel ist erforderlich!");
       return;
     }
     setTodos([...todos, { title, details, done }]);
@@ -67,7 +67,7 @@ export default function App() {
 
   function saveEditHandler() {
     if (!title) {
-      setErrorMsg("Title is required");
+      setErrorMsg("Titel ist erforderlich!");
       return;
     }
     const newTodos = todos.map((todo, i) => {
@@ -126,12 +126,13 @@ export default function App() {
         <h1 className="text-4xl font-bold">Todo's</h1>
         <button
           onClick={() => setAddMode(!addMode)}
-          className="bg-green-500 rounded text-white p-0.5 flex gap-2 items-center"
+          className="bg-green-500 rounded text-white py-0.5 px-2 flex gap-2 items-center"
         >
           <p className="font-bold">Neu</p>
           <PlusSquare size={24} weight="bold" alt={"Todo hinzufügen"} />
         </button>
       </header>
+
       {(addMode || editMode) && (
         <div>
           {addMode ? (
@@ -145,6 +146,7 @@ export default function App() {
               onClick={cancelHandler}
             ></div>
           )}
+
           <TodoInput
             title={title}
             details={details}
@@ -158,6 +160,7 @@ export default function App() {
           />
         </div>
       )}
+
       <TodoList
         todos={todos}
         deleteTodoHandler={deleteTodoHandler}
