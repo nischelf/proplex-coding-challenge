@@ -24,7 +24,7 @@ export default function TodoInput({
       <div className="w-3/4 bg-white flex flex-col gap-2 rounded-lg p-2 items-center">
         <input
           type="text"
-          placeholder="Title"
+          placeholder="Titel"
           value={title}
           onChange={titleChange}
           className="rounded border-2 border-gray-400 w-full p-1 md:text-xl lg:text-base"

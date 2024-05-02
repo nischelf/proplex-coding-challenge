@@ -88,6 +88,6 @@ export default function TodoList({
       </ul>
     </>
   ) : (
-    <p>No todos</p>
+    <p>Keine Todo's</p>
   );
 }
