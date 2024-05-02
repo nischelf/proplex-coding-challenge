@@ -23,7 +23,7 @@ export default function TodoInput({
     <div className="fixed left-0 top-1/3 flex flex-col w-full justify-center items-center">
       <div className="w-3/4 bg-white flex flex-col gap-2 rounded-lg p-2">
         <label htmlFor="title" className="md:text-xl lg:text-normal">
-          Titel:
+          Titel: <span className="text-red-500">*</span>
         </label>
         <input
           type="text"
@@ -48,21 +48,21 @@ export default function TodoInput({
           {addMode ? (
             <button
               onClick={addTodoHandler}
-              className="bg-green-500 rounded text-white p-0.5 w-full md:text-xl lg:text-base hover:bg-green-700 active:bg-green-700 transition-colors duration-300 ease-in-out"
+              className="bg-green-500 rounded text-white p-1 w-full md:text-xl lg:text-base hover:bg-green-700 active:bg-green-700 transition-colors duration-300 ease-in-out"
             >
               Hinzufügen
             </button>
           ) : (
             <button
               onClick={saveEditHandler}
-              className="bg-green-500 rounded text-white p-0.5 w-full md:text-xl lg:text-base hover:bg-green-700 active:bg-green-700 transition-colors duration-300 ease-in-out"
+              className="bg-green-500 rounded text-white p-1 w-full md:text-xl lg:text-base hover:bg-green-700 active:bg-green-700 transition-colors duration-300 ease-in-out"
             >
               Speichern
             </button>
           )}
           <button
             onClick={cancelHandler}
-            className="bg-red-500 rounded text-white p-0.5 w-full md:text-xl lg:text-base hover:bg-red-700 active:bg-red-700 transition-colors duration-300 ease-in-out"
+            className="bg-red-500 rounded text-white p-1 w-full md:text-xl lg:text-base hover:bg-red-700 active:bg-red-700 transition-colors duration-300 ease-in-out"
           >
             Abbrechen
           </button>
